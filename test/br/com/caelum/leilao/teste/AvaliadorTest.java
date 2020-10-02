@@ -119,4 +119,24 @@ public class AvaliadorTest {
 		assertEquals(300.0, maiores.get(1).getValor(), 0.00001);
 		assertEquals(200.0, maiores.get(2).getValor(), 0.00001);
 	}
+	
+	@Test
+	public void deveEntenderLancesEmOrdensRandomicas() {
+		Usuario joao = new Usuario("João");
+		Usuario maria = new Usuario("Maria");
+		
+		Leilao leilao = new Leilao("Playstation 3 novo");
+		leilao.propoe(new Lance(joao, 200.0));
+		leilao.propoe(new Lance(maria, 450.0));
+		leilao.propoe(new Lance(joao, 120.0));
+		leilao.propoe(new Lance(maria, 700.0));
+		leilao.propoe(new Lance(joao, 630.0));
+		leilao.propoe(new Lance(maria, 230.0));
+		
+		Avaliador leiloeiro = new Avaliador();
+		leiloeiro.avalia(leilao);
+		
+		assertEquals(700.0, leiloeiro.getMaiorLance(), 0.00001);
+		assertEquals(120.0, leiloeiro.getMenorLance(), 0.00001);
+	}
 }
